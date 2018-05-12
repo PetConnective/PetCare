@@ -10,12 +10,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180325155943) do
+ActiveRecord::Schema.define(version: 20180501205932) do
 
-  create_table "races", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "name"
+  create_table "adoption_processes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.bigint "publication_id"
+    t.datetime "date"
+    t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["publication_id"], name: "index_adoption_processes_on_publication_id"
+    t.index ["user_id"], name: "index_adoption_processes_on_user_id"
+  end
+
+  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "publication_id"
+    t.bigint "user_id"
+    t.datetime "date"
+    t.string "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["publication_id"], name: "index_comments_on_publication_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "pets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.string "name"
+    t.date "birthdate"
+    t.integer "pet_type"
+    t.integer "genre"
+    t.string "breed"
+    t.integer "size"
+    t.boolean "castrado"
+    t.boolean "dewormed"
+    t.boolean "vacunas"
+    t.string "related_location"
+    t.text "description"
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_pets_on_user_id"
+  end
+
+  create_table "publications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.bigint "pet_id"
+    t.integer "status"
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pet_id"], name: "index_publications_on_pet_id"
+    t.index ["user_id"], name: "index_publications_on_user_id"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -36,4 +82,11 @@ ActiveRecord::Schema.define(version: 20180325155943) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "adoption_processes", "publications"
+  add_foreign_key "adoption_processes", "users"
+  add_foreign_key "comments", "publications"
+  add_foreign_key "comments", "users"
+  add_foreign_key "pets", "users"
+  add_foreign_key "publications", "pets"
+  add_foreign_key "publications", "users"
 end
