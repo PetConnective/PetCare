@@ -10,61 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180501205932) do
+ActiveRecord::Schema.define(version: 20180807010125) do
 
-  create_table "adoption_processes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "pet_photos", force: :cascade do |t|
+    t.bigint "pet_id"
     t.bigint "user_id"
-    t.bigint "publication_id"
-    t.datetime "date"
-    t.integer "status"
+    t.string "photo_path"
+    t.string "profile_photo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["publication_id"], name: "index_adoption_processes_on_publication_id"
-    t.index ["user_id"], name: "index_adoption_processes_on_user_id"
+    t.index ["pet_id"], name: "index_pet_photos_on_pet_id"
+    t.index ["user_id"], name: "index_pet_photos_on_user_id"
   end
 
-  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "publication_id"
-    t.bigint "user_id"
-    t.datetime "date"
-    t.string "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["publication_id"], name: "index_comments_on_publication_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
-  create_table "pets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "pets", force: :cascade do |t|
     t.bigint "user_id"
     t.string "name"
-    t.date "birthdate"
-    t.integer "pet_type"
-    t.integer "genre"
-    t.string "breed"
+    t.integer "breed"
+    t.integer "color"
     t.integer "size"
-    t.boolean "castrado"
+    t.integer "age"
+    t.integer "gender"
+    t.boolean "vaccined"
+    t.boolean "neutered"
     t.boolean "dewormed"
-    t.boolean "vacunas"
-    t.string "related_location"
-    t.text "description"
-    t.string "color"
+    t.text "notes"
+    t.integer "status"
+    t.datetime "date"
+    t.integer "type"
+    t.decimal "price"
+    t.float "latitude"
+    t.float "longitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_pets_on_user_id"
   end
 
-  create_table "publications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "user_id"
-    t.bigint "pet_id"
-    t.integer "status"
-    t.datetime "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["pet_id"], name: "index_publications_on_pet_id"
-    t.index ["user_id"], name: "index_publications_on_user_id"
-  end
-
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -82,11 +67,7 @@ ActiveRecord::Schema.define(version: 20180501205932) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
-  add_foreign_key "adoption_processes", "publications"
-  add_foreign_key "adoption_processes", "users"
-  add_foreign_key "comments", "publications"
-  add_foreign_key "comments", "users"
+  add_foreign_key "pet_photos", "pets"
+  add_foreign_key "pet_photos", "users"
   add_foreign_key "pets", "users"
-  add_foreign_key "publications", "pets"
-  add_foreign_key "publications", "users"
 end

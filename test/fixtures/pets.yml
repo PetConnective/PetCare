@@ -3,29 +3,37 @@
 one:
   user: one
   name: MyString
-  birthdate: 2018-05-01
-  pet_type: 1
-  genre: 1
-  breed: MyString
+  breed: 1
+  color: 1
   size: 1
-  castrado: false
+  age: 1
+  gender: 1
+  vaccined: false
+  neutered: false
   dewormed: false
-  vacunas: false
-  related_location: MyString
-  description: MyText
-  color: MyString
+  notes: MyText
+  status: 1
+  date: 2018-07-28 18:05:09
+  type: 1
+  price: 9.99
+  latitude: 1.5
+  longitude: 1.5
 
 two:
   user: two
   name: MyString
-  birthdate: 2018-05-01
-  pet_type: 1
-  genre: 1
-  breed: MyString
+  breed: 1
+  color: 1
   size: 1
-  castrado: false
+  age: 1
+  gender: 1
+  vaccined: false
+  neutered: false
   dewormed: false
-  vacunas: false
-  related_location: MyString
-  description: MyText
-  color: MyString
+  notes: MyText
+  status: 1
+  date: 2018-07-28 18:05:09
+  type: 1
+  price: 9.99
+  latitude: 1.5
+  longitude: 1.5
